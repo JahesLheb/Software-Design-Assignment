@@ -1,0 +1,116 @@
+public class main {
+
+    interface VehicleFactory {
+        main car = new main();
+        main suv = new main();
+    }
+
+    class BMWFactory implements VehicleFactory {
+
+        @Override
+        public car createcar() {
+            return new BMWCAR();
+        }
+
+        @Override
+        public suv createsuv() {
+            return new BMWSUV();
+        }
+    }
+
+    class HondaFactory implements VehicleFactory {
+
+        @Override
+        public car createcar() {
+            return new HondaCar();
+        }
+
+        @Override
+        public suv createsuv() {
+            return new HondaSUV();
+        }
+
+    }
+
+    interface car {
+        void paint();
+    }
+
+    class BMWCAR implements car {
+
+        @Override
+        public void paint() {
+            System.out.println("You have selected BMW a Car");
+        }
+    }
+
+    class HondaCar implements car {
+
+        @Override
+        public void paint() {
+            System.out.println("You have selected a Honda Car");
+        }
+    }
+
+    interface suv {
+        void paint();
+    }
+
+    class BMWSUV implements suv {
+
+        @Override
+        public void paint() {
+            System.out.println("You have selected a BMW SUV");
+        }
+    }
+
+    class HondaSUV implements suv {
+
+        @Override
+        public void paint() {
+            System.out.println("You have selected a Honda SUV");
+        }
+    }
+
+    class Application {
+        private car car;
+        private suv suv;
+
+        public Application(VehicleFactory factory) {
+            car = factory.car();
+            suv = factory.suv();
+        }
+
+        public void paint() {
+            car.paint();
+            suv.paint();
+        }
+    }
+
+    class Demo {
+
+        private static Application configureApplication() {
+            Application app;
+            VehicleFactory factory;
+            String osName = System.getProperty("os.name").toLowerCase();
+
+            if (osName.contains("honda")) {
+                factory = new HondaFactory();
+                app = new Application(factory);
+            }
+
+            else {
+                factory = new BMWFactory();
+                app = new Application(factory);
+            }
+
+            return app;
+        }
+
+        public static void main(String[] args) {
+            Application app = configureApplication();
+            app.paint();
+        }
+    }
+
+}
